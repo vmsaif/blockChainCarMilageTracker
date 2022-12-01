@@ -24,6 +24,7 @@
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "eslint": "^8.7.0",
+    "fabric-network": "^2.2.0",
     "mocha": "^9.2.0",
     "nyc": "^15.0.0",
     "sinon": "^9.0.1",
