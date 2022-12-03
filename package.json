@@ -1,10 +1,10 @@
 {
   "name": "blockChainCarMilageTracker",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "My Smart Contract",
   "main": "index.js",
   "engines": {
-    "node": ">=8",
+    "node": ">=14",
     "npm": ">=5"
   },
   "scripts": {

@@ -18,6 +18,9 @@
 * required for this test file to be run locally.
 */
 
+/*eslint no-trailing-spaces: ["error", { "skipBlankLines": true }]*/
+/* eslint-disable  no-unused-vars */
+
 'use strict';
 
 const assert = require('assert');
@@ -26,7 +29,7 @@ const SmartContractUtil = require('./js-smart-contract-util');
 const os = require('os');
 const path = require('path');
 
-describe('MyContract-blockChainCarMilageTracker@0.0.1' , () => {
+describe('MyContract-blockChainCarMilageTracker@0.0.2' , () => {
 
     const homedir = os.homedir();
     const walletPath = path.join(homedir, '.fabric-vscode', 'v2', 'environments', '1 Org Local Fabric', 'wallets', 'Org1');
@@ -72,12 +75,27 @@ describe('MyContract-blockChainCarMilageTracker@0.0.1' , () => {
         }).timeout(10000);
     });
 
-    describe('transaction1', () =>{
-        it('should submit transaction1 transaction', async () => {
+    describe('addACar', () =>{
+        it('should submit addACar transaction', async () => {
+            // TODO: populate transaction parameters
+            const arg0 = 'EXAMPLE';
+            const arg1 = 'EXAMPLE';
+            const arg2 = 'EXAMPLE';
+            const arg3 = 'EXAMPLE';
+            const args = [ arg0, arg1, arg2, arg3];
+            const response = await SmartContractUtil.submitTransaction('MyContract', 'addACar', args, gateway); // Returns buffer of transaction return value
+            
+            // TODO: Update with return value of transaction
+            // assert.strictEqual(JSON.parse(response.toString()), undefined);
+        }).timeout(10000);
+    });
+
+    describe('query', () =>{
+        it('should submit query transaction', async () => {
             // TODO: populate transaction parameters
             const arg0 = 'EXAMPLE';
             const args = [ arg0];
-            const response = await SmartContractUtil.submitTransaction('MyContract', 'transaction1', args, gateway); // Returns buffer of transaction return value
+            const response = await SmartContractUtil.submitTransaction('MyContract', 'query', args, gateway); // Returns buffer of transaction return value
             
             // TODO: Update with return value of transaction
             // assert.strictEqual(JSON.parse(response.toString()), undefined);
