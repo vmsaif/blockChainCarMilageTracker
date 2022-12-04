@@ -1,0 +1,22 @@
+[
+  {
+    "vin": "123456789",
+    "make": "Honda",
+    "model": "civic",
+    "year": "2012",
+    "milage": "122304",
+    "timeStamp": "2022-12-04T21:16:35.445Z",
+    "ownerFirstName": "Alice",
+    "ownerLastName": "Parker"
+  },
+  {
+    "vin": "987654321",
+    "make": "Toyota",
+    "model": "Corolla",
+    "year": "2014",
+    "milage": "323945",
+    "timeStamp": "2022-12-04T21:16:35.445Z",
+    "ownerFirstName": "Mr.",
+    "ownerLastName": "Bob"
+  }
+]
