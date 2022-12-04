@@ -9,12 +9,13 @@ const SmartContractUtil = require('./functionalTests/js-smart-contract-util.js')
 const os = require('os');
 const path = require('path');
 const { fileURLToPath } = require('url')
+const gateway = new fabricNetwork.Gateway();
 
 async function main() {
 
     const homedir = os.homedir();
     const walletPath = path.join(homedir, '.fabric-vscode', 'v2', 'environments', '1 Org Local Fabric', 'wallets', 'Org1');
-    const gateway = new fabricNetwork.Gateway();
+    
     const identityName = 'Org1 Admin';
     let connectionProfile = await SmartContractUtil.getConnectionProfile();
     let wallet = await fabricNetwork.Wallets.newFileSystemWallet(walletPath);
@@ -34,7 +35,20 @@ async function main() {
     await gateway.connect(connectionProfile, options);
 
     // -------submit transaction ----------------------------------
+    
     // submitCar();
+    
+
+    // ----------------------------------------------------------------------
+
+    // -----------now query --------------------------------
+    queryCar(12345678);
+    // ----------------------------------------------------------------------
+
+    gateway.disconnect();
+}
+
+async function submitCar(){
     let vin = '123456789';
     let make = 'Honda';
     let model = 'Civic';
@@ -47,36 +61,32 @@ async function main() {
     
     const response = await SmartContractUtil.submitTransaction('MyContract', 'addACar', args, gateway); // Returns buffer of transaction return value
     console.log(JSON.parse(response.toString()));
-    // ----------------------------------------------------------------------
-
-    // -----------now query --------------------------------
-    // queryCar();
-    // ----------------------------------------------------------------------
-
-    gateway.disconnect();
 }
 
-async function submitCar(){
-    
-}
-
-async function queryCar(){
-    const key = '123456789';
+async function queryCar(myKey){
+    const key = myKey;
     const qArgs = [ key];
-    const qResponse = await SmartContractUtil.submitTransaction('MyContract', 'query', qArgs, gateway); // Returns buffer of transaction return value
 
-    const network = await gateway.getNetwork('mychannel');
-    const channel = network.getChannel();
+    try{
+        const qResponse = await SmartContractUtil.submitTransaction('MyContract', 'query', qArgs, gateway); // Returns buffer of transaction return value
+        console.log(JSON.parse(qResponse.toString()))
+    } catch(error) {
+        console.log('No entry with VIN: '+ key + ' was found.');
+    }
 
-    let resultBuffer = await channel.queryByChaincode(qResponse);
-    console.log(JSON.parse(resultBuffer.toString()))
+    // const network = await gateway.getNetwork('mychannel');
+    // const channel = network.getChannel();
+
+    // let resultBuffer = await channel.queryByChaincode(qResponse);
+    // console.log(JSON.parse(resultBuffer.toString()))
+    // console.log(JSON.parse(qResponse.toString()))
 }
 
 main().then(() => {
     console.log('done');
   }).catch((e) => {
-    console.log('Final error checking.......');
-    console.log(e);
-    console.log(e.stack);
-    process.exit(-1);
+    // console.log('Final error checking.......');
+    // console.log(e);
+    // console.log(e.stack);
+    // process.exit(-1);
   });
