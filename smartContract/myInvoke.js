@@ -16,7 +16,7 @@ async function main() {
     const homedir = os.homedir();
     const walletPath = path.join(homedir, '.fabric-vscode', 'v2', 'environments', '1 Org Local Fabric', 'wallets', 'Org1');
     
-    const identityName = 'Org1 Admin123';
+    const identityName = 'Org1 Admin';
     let connectionProfile = await SmartContractUtil.getConnectionProfile();
     let wallet = await fabricNetwork.Wallets.newFileSystemWallet(walletPath);
 
@@ -36,13 +36,13 @@ async function main() {
 
     // -------submit transaction ----------------------------------
     
-    submitCar();
+    // submitCar();
     
 
     // ----------------------------------------------------------------------
 
     // -----------now query --------------------------------
-    // queryCar(12345678);
+    queryCar(123456789);
     // ----------------------------------------------------------------------
 
     gateway.disconnect();
@@ -69,7 +69,9 @@ async function queryCar(myKey){
 
     try{
         const qResponse = await SmartContractUtil.submitTransaction('MyContract', 'query', qArgs, gateway); // Returns buffer of transaction return value
-        console.log(JSON.parse(qResponse.toString()))
+        // console.log(JSON.parse(qResponse.toString()))
+        console.log(JSON.parse(qResponse).vin);
+
     } catch(error) {
         console.log('No entry with VIN: '+ key + ' was found.');
     }

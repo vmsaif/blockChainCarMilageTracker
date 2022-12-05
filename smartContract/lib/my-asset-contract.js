@@ -13,16 +13,17 @@ class MyContract extends Contract {
 
     //take argument and create a car object to be updated to the ledger
     // vin stands for vehicle identification number
-    async addACar(ctx, vin, make, model, year, milage, ownerFirstName, ownerLastName) {
-        console.info('addACar', vin, make, year, milage, ownerFirstName, ownerLastName);
+
+    //this function takes json object as args.
+    async addACar(ctx, args) {
         let myCar = {
-            vin: vin,
-            make: make,
-            model: model,
-            year: year,
-            milage: milage,
-            ownerFirstName: ownerFirstName,
-            ownerLastName: ownerLastName
+            vin: args.vin,
+            make: args.make,
+            model: args.model,
+            year: args.year,
+            milage: args.milage,
+            ownerFirstName: args.ownerFirstName,
+            ownerLastName: args.ownerLastName
         };
         await ctx.stub.putState(vin, Buffer.from(JSON.stringify(myCar)));
         return JSON.stringify(myCar);
@@ -33,6 +34,56 @@ class MyContract extends Contract {
         let returnAsBytes = await ctx.stub.getState(vin);
         let result = JSON.parse(returnAsBytes);
         return JSON.stringify(result);
+    }
+
+    async vinExistsOnChain(ctx, vin) {
+        const buffer = await ctx.stub.getState(vin);
+        return (!!buffer && buffer.length > 0);
+    }
+
+    async checkInvalidMilage(ctx, vin) {
+        output = false;
+        const qArgs = [ vin];
+
+        try {
+            if(vinExistsOnChain(ctx, vin)){
+                const qResponse = await SmartContractUtil.submitTransaction('MyContract', 'query', qArgs, gateway); // Returns buffer of transaction return value
+
+                let foundVin = JSON.parse(qResponse).vin;
+
+                if(vin >= foundVin){
+                    out = true;
+                }
+            } else{
+                console.log('No entry with VIN: '+ key + ' was found.');
+            }
+        } catch(error) {
+            console.log(error.stack);
+        }
+        return output;
+    }
+
+    async add(ctx, vin, make, model, year, milage, ownerFirstName, ownerLastName) {
+        
+        console.info('addACar', vin, make, year, milage, ownerFirstName, ownerLastName);
+        let output = 'Invalid milage entry. Car\'s milage has to be greater or equal to last added milage.';
+        
+        let myCar = {
+            vin: vin,
+            make: make,
+            model: model,
+            year: year,
+            milage: milage,
+            ownerFirstName: ownerFirstName,
+            ownerLastName: ownerLastName
+        };
+
+        if(checkInvalidMilage(myCar.vin)){
+            await ctx.stub.putState(vin, Buffer.from(JSON.stringify(myCar)));
+            output = JSON.stringify(myCar);
+        }
+        
+        return output;
     }
 }
 

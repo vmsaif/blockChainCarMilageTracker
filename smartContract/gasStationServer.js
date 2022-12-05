@@ -8,26 +8,24 @@ let randomMax = 59;
 let randomVal;
 
 function main(){
+    
     try {
+        
         let obj = JSON.parse(fs.readFileSync(fName).toString());
-        setCurrDate();
+        setCurrDate(obj);
         // runServer();
-    } catch(err){
 
+        
+    } catch(err){
+        console.log(err.stack)
     }
     
     
-    fs.close(file_descriptor, (error) => {
-        if (error)
-          console.error('Problem with closing the file', error);
-        else {
-          console.log("\n> File Closed successfully");
-        }
-    });
+    
     
 }
 
-function setCurrDate(){
+function setCurrDate(obj){
     
     let dateObj = new Date();
     let diff = 30;
@@ -43,7 +41,7 @@ function setCurrDate(){
 }
 
 function runServer(){
-
+    
     for(let i = 0; i < jsonFile.length; i++){
         
     }
