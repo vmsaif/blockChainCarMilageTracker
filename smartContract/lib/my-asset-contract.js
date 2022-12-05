@@ -63,6 +63,39 @@ class MyContract extends Contract {
         return output;
     }
 
+    async update(ctx, vin, milage, ownerFirstName, ownerLastName) {
+        output = false;
+        const qArgs = [ vin];
+
+        try {
+            if(vinExistsOnChain(ctx, vin)){
+                const qResponse = await SmartContractUtil.submitTransaction('MyContract', 'query', qArgs, gateway); // Returns buffer of transaction return value
+
+                let foundMilage = JSON.parse(qResponse).milage;
+                let foundOwnerFirstName = JSON.parse(qResponse).ownerFirstName;
+                let foundOwnerLastName = JSON.parse(qResponse).ownerLastName;
+
+                if(foundMilage.length > 0){
+                    foundMilage = milage;
+                }
+                if(foundOwnerFirstName.length > 0){
+                    foundOwnerFirstName = ownerFirstName;
+                }
+                if(foundOwnerLastName.length > 0){
+                    foundOwnerLastName = ownerLastName;
+                }
+
+                addACar(ctx, qResponse);
+
+            } else{
+                console.log('No entry with VIN: '+ key + ' was found.');
+            }
+        } catch(error) {
+            console.log(error.stack);
+        }
+        return output;
+    }
+
     async add(ctx, vin, make, model, year, milage, ownerFirstName, ownerLastName) {
         
         console.info('addACar', vin, make, year, milage, ownerFirstName, ownerLastName);

@@ -1,5 +1,5 @@
-
-
+import { hello } from './module.js';
+const invodeJs = require('./myInvoke');
 fs = require('fs');
 let fName = './listOfCars.json';
 
@@ -7,13 +7,13 @@ let randomMin = 20;
 let randomMax = 59;
 let randomVal;
 
-function main(){
+function main() {
     
     try {
         
         let obj = JSON.parse(fs.readFileSync(fName).toString());
         setCurrDate(obj);
-        // runServer();
+        runServer(obj);
 
         
     } catch(err){
@@ -25,7 +25,7 @@ function main(){
     
 }
 
-function setCurrDate(obj){
+function setCurrDate(obj) {
     
     let dateObj = new Date();
     let diff = 30;
@@ -40,12 +40,14 @@ function setCurrDate(obj){
     fs.writeFileSync(fName, JSON.stringify(obj, null, 2));
 }
 
-function runServer(){
-    
-    for(let i = 0; i < jsonFile.length; i++){
-        
+function runServer(obj){
+
+    while(true){
+        for(let i = 0; i < obj.length; i++){
+            
+        }
     }
-    console.log(jsonFile.length);
+    
 }
 
 main();
