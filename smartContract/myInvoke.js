@@ -16,7 +16,7 @@ async function main() {
     const homedir = os.homedir();
     const walletPath = path.join(homedir, '.fabric-vscode', 'v2', 'environments', '1 Org Local Fabric', 'wallets', 'Org1');
     
-    const identityName = 'Org1 Admin';
+    const identityName = 'Org1 Admin123';
     let connectionProfile = await SmartContractUtil.getConnectionProfile();
     let wallet = await fabricNetwork.Wallets.newFileSystemWallet(walletPath);
 
@@ -36,20 +36,20 @@ async function main() {
 
     // -------submit transaction ----------------------------------
     
-    // submitCar();
+    submitCar();
     
 
     // ----------------------------------------------------------------------
 
     // -----------now query --------------------------------
-    queryCar(12345678);
+    // queryCar(12345678);
     // ----------------------------------------------------------------------
 
     gateway.disconnect();
 }
 
 async function submitCar(){
-    let vin = '123456789';
+    let vin = '123';
     let make = 'Honda';
     let model = 'Civic';
     let year = '2013';
@@ -59,7 +59,7 @@ async function submitCar(){
     
     const args = [ vin, make, model, year, milage, ownerFirstName, ownerLastName];
     
-    const response = await SmartContractUtil.submitTransaction('MyContract', 'addACar', args, gateway); // Returns buffer of transaction return value
+    const response = await SmartContractUtil.submitTransaction('MyContract', 'add', args, gateway); // Returns buffer of transaction return value
     console.log(JSON.parse(response.toString()));
 }
 
@@ -89,4 +89,6 @@ main().then(() => {
     // console.log(e);
     // console.log(e.stack);
     // process.exit(-1);
+    console.log("___________________________");
+    console.log(e);
   });
