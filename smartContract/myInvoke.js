@@ -8,8 +8,8 @@ const fabricNetwork = require('fabric-network');
 const SmartContractUtil = require('./functionalTests/js-smart-contract-util.js'); 
 const os = require('os');
 const path = require('path');
-const { fileURLToPath } = require('url')
 const gateway = new fabricNetwork.Gateway();
+
 
 async function main() {
 
@@ -32,8 +32,19 @@ async function main() {
         }
     };
 
-    
-
+    await gateway.connect(connectionProfile, options);
+    let myObj = {
+                "vin": "5555",
+                "make": "Honda",
+                "model": "civic",
+                "year": "2012",
+                "milage": "122304",
+                "timeStamp": "2022-12-06T00:38:06.151Z",
+                "ownerFirstName": "Alice",
+                "ownerLastName": "Parker"
+                };
+    console.log(myObj.vin);
+    submitCar(myObj);
     // -------submit transaction ----------------------------------
     
     // submitCar();
@@ -42,28 +53,53 @@ async function main() {
     // ----------------------------------------------------------------------
 
     // -----------now query --------------------------------
-    queryCar(123456789);
+    // queryCar(123456789);
     // ----------------------------------------------------------------------
 
-    
+    gateway.disconnect();
 }
 
+// async function getConnectionProfile(connectionProfilePath) {
+//     const homedir = os.homedir();
+//     const connectionProfilePath = path.join(homedir, '.fabric-vscode', 'v2', 'environments', '1 Org Local Fabric', 'gateways', 'Org1 Gateway.json');
+
+//     const connectionProfileContents = await fs.readFile(connectionProfilePath, 'utf8');
+//     if (connectionProfilePath.endsWith('.json')) {
+//         return JSON.parse(connectionProfileContents);
+//     } else if (connectionProfilePath.endsWith('.yaml') || connectionProfilePath.endsWith('.yml')) {
+//         return yaml.safeLoad(connectionProfileContents);
+//     }
+// }
+
 async function submitCar(jsonObj) {
+    console.log("start");
+
+    console.log(typeof jsonObj);
+    console.log(typeof jsonObj.vin);
+    console.log(jsonObj.vin);
+
+    console.log("end");
+
+    let vin = jsonObj.vin;
     
-    let vin = JSON.parse(jsonObj).vin;
-    let make = JSON.parse(jsonObj).make;
-    let model = JSON.parse(jsonObj).model;
-    let year = JSON.parse(jsonObj).year;
-    let milage = JSON.parse(jsonObj).milage;
-    let timeStamp = JSON.parse(jsonObj).timeStamp;
-    let ownerFirstName = JSON.parse(jsonObj).ownerFirstName;
-    let ownerLastName = JSON.parse(jsonObj).ownerLastName;
+    let make = jsonObj.make;
+    let model = jsonObj.model;
+    let year = jsonObj.year;
+    let milage = jsonObj.milage;
+    let timeStamp = jsonObj.timeStamp;
+    let ownerFirstName = jsonObj.ownerFirstName;
+    let ownerLastName = jsonObj.ownerLastName;
     
-    const args = [ vin, make, model, year, milage, timeStamp, ownerFirstName, ownerLastName];
+    const args = [vin, make, model, year, milage, timeStamp, ownerFirstName, ownerLastName];
     
-    await gateway.connect(connectionProfile, options);
-    const response = await SmartContractUtil.submitTransaction('MyContract', 'add', args, gateway); // Returns buffer of transaction return value
-    console.log(JSON.parse(response.toString()));
+    console.log("____");
+    const response = await SmartContractUtil.submitTransaction('MyContract', 'add', args, gateway); 
+    console.log("=====");
+
+    // Returns buffer of transaction return value
+    console.log(response.toString());
+    console.log("____");
+    // console.log(JSON.parse(response.toString()));
     gateway.disconnect();
 }
 
@@ -83,11 +119,12 @@ async function queryCar(myKey){
     }
 }
 
-main().then(() => {
-    console.log('done');
-  }).catch((e) => {
-    console.log('Final error checking.......');
-    console.log(e);
-    console.log(e.stack);
-    process.exit(-1);
-  });
+main()
+// main().then(() => {
+//     console.log('done');
+//   }).catch((e) => {
+//     console.log('Final error checking.......');
+//     console.log(e);
+//     console.log(e.stack);
+//     process.exit(-1);
+//   });
