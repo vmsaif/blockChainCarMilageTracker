@@ -1,0 +1,9 @@
+{
+  "connection_file": "fabric_connection.json",
+  "appAdmin": "admin",
+  "appAdminSecret": "adminpw",
+  "orgMSPID": "Org1MSP",
+  "caName": "http://org1ca-api.127-0-0-1.nip.io:8085",
+  "userName": "User1",
+  "gatewayDiscovery": { "enabled": true, "asLocalhost": true }
+}
