@@ -22,6 +22,7 @@ class MyContract extends Contract {
             model: args.model,
             year: args.year,
             milage: args.milage,
+            timeStamp: args.timeStamp,
             ownerFirstName: args.ownerFirstName,
             ownerLastName: args.ownerLastName
         };
@@ -43,7 +44,7 @@ class MyContract extends Contract {
 
     async checkInvalidMilage(ctx, vin) {
         output = false;
-        const qArgs = [ vin];
+        const qArgs = [vin];
 
         try {
             if(vinExistsOnChain(ctx, vin)){
@@ -63,9 +64,10 @@ class MyContract extends Contract {
         return output;
     }
 
-    async update(ctx, vin, milage, ownerFirstName, ownerLastName) {
+    async update(ctx, vin, milage, timeStamp, ownerFirstName, ownerLastName) {
+        
         output = false;
-        const qArgs = [ vin];
+        const qArgs = [vin];
 
         try {
             if(vinExistsOnChain(ctx, vin)){
@@ -74,6 +76,7 @@ class MyContract extends Contract {
                 let foundMilage = JSON.parse(qResponse).milage;
                 let foundOwnerFirstName = JSON.parse(qResponse).ownerFirstName;
                 let foundOwnerLastName = JSON.parse(qResponse).ownerLastName;
+                let foundTime = JSON.parse(qResponse).timeStamp;
 
                 if(foundMilage.length > 0){
                     foundMilage = milage;
@@ -83,6 +86,9 @@ class MyContract extends Contract {
                 }
                 if(foundOwnerLastName.length > 0){
                     foundOwnerLastName = ownerLastName;
+                }
+                if(foundTime.length > 0){
+                    foundTime = timeStamp;
                 }
 
                 addACar(ctx, qResponse);
@@ -96,9 +102,9 @@ class MyContract extends Contract {
         return output;
     }
 
-    async add(ctx, vin, make, model, year, milage, ownerFirstName, ownerLastName) {
+    async add(ctx, vin, make, model, year, milage, timeStamp, ownerFirstName, ownerLastName) {
         
-        console.info('addACar', vin, make, year, milage, ownerFirstName, ownerLastName);
+        console.info('addACar', vin, make, year, milage,timeStamp, ownerFirstName, ownerLastName);
         let output = 'Invalid milage entry. Car\'s milage has to be greater or equal to last added milage.';
         
         let myCar = {
@@ -107,6 +113,7 @@ class MyContract extends Contract {
             model: model,
             year: year,
             milage: milage,
+            timeStamp: timeStamp,
             ownerFirstName: ownerFirstName,
             ownerLastName: ownerLastName
         };

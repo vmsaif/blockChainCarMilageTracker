@@ -32,7 +32,7 @@ async function main() {
         }
     };
 
-    await gateway.connect(connectionProfile, options);
+    
 
     // -------submit transaction ----------------------------------
     
@@ -45,52 +45,49 @@ async function main() {
     queryCar(123456789);
     // ----------------------------------------------------------------------
 
-    gateway.disconnect();
+    
 }
 
-async function submitCar(){
-    let vin = '123';
-    let make = 'Honda';
-    let model = 'Civic';
-    let year = '2013';
-    let milage = '100320';
-    let ownerFirstName = 'Saif';
-    let ownerLastName = 'Mahmud';
+async function submitCar(jsonObj) {
     
-    const args = [ vin, make, model, year, milage, ownerFirstName, ownerLastName];
+    let vin = JSON.parse(jsonObj).vin;
+    let make = JSON.parse(jsonObj).make;
+    let model = JSON.parse(jsonObj).model;
+    let year = JSON.parse(jsonObj).year;
+    let milage = JSON.parse(jsonObj).milage;
+    let timeStamp = JSON.parse(jsonObj).timeStamp;
+    let ownerFirstName = JSON.parse(jsonObj).ownerFirstName;
+    let ownerLastName = JSON.parse(jsonObj).ownerLastName;
     
+    const args = [ vin, make, model, year, milage, timeStamp, ownerFirstName, ownerLastName];
+    
+    await gateway.connect(connectionProfile, options);
     const response = await SmartContractUtil.submitTransaction('MyContract', 'add', args, gateway); // Returns buffer of transaction return value
     console.log(JSON.parse(response.toString()));
+    gateway.disconnect();
 }
 
 async function queryCar(myKey){
     const key = myKey;
-    const qArgs = [ key];
+    const qArgs = [key];
 
     try{
+        await gateway.connect(connectionProfile, options);
         const qResponse = await SmartContractUtil.submitTransaction('MyContract', 'query', qArgs, gateway); // Returns buffer of transaction return value
         // console.log(JSON.parse(qResponse.toString()))
         console.log(JSON.parse(qResponse).vin);
+        gateway.disconnect();
 
     } catch(error) {
         console.log('No entry with VIN: '+ key + ' was found.');
     }
-
-    // const network = await gateway.getNetwork('mychannel');
-    // const channel = network.getChannel();
-
-    // let resultBuffer = await channel.queryByChaincode(qResponse);
-    // console.log(JSON.parse(resultBuffer.toString()))
-    // console.log(JSON.parse(qResponse.toString()))
 }
 
 main().then(() => {
     console.log('done');
   }).catch((e) => {
-    // console.log('Final error checking.......');
-    // console.log(e);
-    // console.log(e.stack);
-    // process.exit(-1);
-    console.log("___________________________");
+    console.log('Final error checking.......');
     console.log(e);
+    console.log(e.stack);
+    process.exit(-1);
   });

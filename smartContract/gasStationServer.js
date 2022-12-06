@@ -1,5 +1,5 @@
-import { hello } from './module.js';
-const invodeJs = require('./myInvoke');
+
+const invodeJs = require('./myInvoke.js');
 fs = require('fs');
 let fName = './listOfCars.json';
 
@@ -13,16 +13,18 @@ function main() {
         
         let obj = JSON.parse(fs.readFileSync(fName).toString());
         setCurrDate(obj);
-        runServer(obj);
-
-        
+        addCarsToChain(obj);
+        // runServer(obj);
+   
     } catch(err){
         console.log(err.stack)
     }
-    
-    
-    
-    
+}
+
+function addCarsToChain(obj) {
+    obj.forEach(function(p){
+        console.log(invodeJs.submitCar(p));
+    });
 }
 
 function setCurrDate(obj) {
