@@ -13,14 +13,13 @@ class MyContract extends Contract {
 
     async query(ctx, vin) {
         const returnAsBytes = await ctx.stub.getState(vin);
+        let returnMSG = "Car not found";
         let result = (!!returnAsBytes && returnAsBytes.length > 0);
         if (!result){
-            let response = {};
-            response.error = `The car with vin ${vin} does not exist`;
-            return response;
+            returnMSG = JSON.parse(returnAsBytes);
+            console.info(returnMSG)
         }
-        const returnMSG = JSON.parse(returnAsBytes.toString());
-        return returnMSG;
+        return result;
     }
 
 

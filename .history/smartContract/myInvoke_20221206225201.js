@@ -8,7 +8,6 @@ const fabricNetwork = require('fabric-network');
 const SmartContractUtil = require('./functionalTests/js-smart-contract-util.js'); 
 const os = require('os');
 const path = require('path');
-
 const gateway = new fabricNetwork.Gateway();
 
 
@@ -72,7 +71,36 @@ async function main() {
 //     }
 // }
 
+async function submitCar(jsonObj) {
+    console.log("start");
 
+    console.log(typeof jsonObj);
+    console.log(typeof jsonObj.vin);
+    console.log(jsonObj.vin);
+
+    console.log("end");
+
+    let vin = jsonObj.vin; 
+    let make = jsonObj.make;
+    let model = jsonObj.model;
+    let year = jsonObj.year;
+    let milage = jsonObj.milage;
+    let timeStamp = jsonObj.timeStamp;
+    let ownerFirstName = jsonObj.ownerFirstName;
+    let ownerLastName = jsonObj.ownerLastName;
+    
+    const args = [vin, make, model, year, milage, timeStamp, ownerFirstName, ownerLastName];
+    
+    console.log("____");
+    const response = await SmartContractUtil.submitTransaction('MyContract', 'add', args, gateway); 
+    console.log("=====");
+
+    // Returns buffer of transaction return value
+    console.log(response.toString());
+    console.log("____");
+    // console.log(JSON.parse(response.toString()));
+    gateway.disconnect();
+}
 
 async function queryCar(myKey){
     const key = myKey;

@@ -67,8 +67,9 @@ app.post('/queryByVim', async (req, res) => {
 
   let networkObj = await network.connectToNetwork(appAdmin);
   console.log('after network OBj');
-  const qArgs = [req.body.vim];
-  let response = await network.invoke(networkObj, true, 'query', qArgs);
+
+  let response = await network.invoke(networkObj, true, 'query', req.body);
+  console.log(response);
   response = JSON.parse(response);
   if (response.error) {
     console.log('inside eRRRRR');

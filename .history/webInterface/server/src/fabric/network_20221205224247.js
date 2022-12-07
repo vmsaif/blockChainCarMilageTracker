@@ -40,7 +40,7 @@ exports.connectToNetwork = async function (userName) {
     return response;
   } finally {
     console.log('Done connecting to network.');
-    return "sucess"
+    // gateway.disconnect();
   }
 };
 
@@ -55,7 +55,6 @@ exports.invoke = async function (networkObj, isQuery, func, args) {
 
       if (args) {
         console.log('inside isQuery, args');
-        console.log(typeof args);
         console.log(args);
         let response = await SmartContractUtil.evaluateTransaction('MyContract', func, args, gateway);
         console.log(response);
