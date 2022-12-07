@@ -2,7 +2,6 @@
 
 const { Contract } = require('fabric-contract-api');
 
-
 class MyContract extends Contract {
 
     //update ledger with a greeting to show that the function was called
@@ -22,7 +21,6 @@ class MyContract extends Contract {
         const returnMSG = JSON.parse(returnAsBytes.toString());
         return returnMSG;
     }
-
 
     async checkInvalidMilage(ctx, vin) {
         output = false;
@@ -46,19 +44,11 @@ class MyContract extends Contract {
         return output;
     }
 
-    
     async update(ctx, vin, milage, ownerFirstName, ownerLastName) {
-            //input as vin, new milage
-            //getstate (vin)
-            // prase it json
-            //if body.milage >= then new milage
-            //return fasle
-            //new json with new milage
 
         let returnMSG = "Vin: " + vin + " has not updated.";
         const qArgs = [vin];
 
-        
         try {
             const stringRespond = await ctx.stub.getState(vin);
             const qResponse = JSON.parse(stringRespond.toString());
@@ -69,18 +59,27 @@ class MyContract extends Contract {
                 let foundMilage = qResponse.milage;
                 let foundOwnerFirstName = qResponse.ownerFirstName;
                 let foundOwnerLastName = qResponse.ownerLastName;
+                let foundTimeStamp = qResponse.timeStamp;
                 let currentTime = new Date();
                 
+                foundTimeStamp.push(currentTime);
                 if(milage.length > 0){
-                    foundMilage = milage;
+                    foundMilage.push(milage);
                     anyData = true;
-                }if(ownerFirstName.length > 0){
-                    foundOwnerFirstName = ownerFirstName;
+                } else {
+                    foundMilage.push(foundMilage[foundMilage.length-1]);
+                }
+                if(ownerFirstName.length > 0){
+                    foundOwnerFirstName.push(ownerFirstName);
                     anyData = true;
+                } else {
+                    foundOwnerFirstName.push(foundOwnerFirstName[foundOwnerFirstName.length-1]);
                 }
                 if(ownerLastName.length > 0){
-                    foundOwnerLastName = ownerLastName;
+                    foundOwnerLastName.push(ownerLastName);
                     anyData = true;
+                } else {
+                    foundOwnerLastName.push(foundOwnerLastName[foundOwnerLastName.length-1]);
                 }
                 
                 if(anyData){
@@ -90,7 +89,7 @@ class MyContract extends Contract {
                         model: qResponse.model,
                         year: qResponse.year,
                         milage: foundMilage,
-                        timeStamp: currentTime,
+                        timeStamp: foundTimeStamp,
                         ownerFirstName: foundOwnerFirstName,
                         ownerLastName: foundOwnerLastName
                     };
@@ -110,15 +109,16 @@ class MyContract extends Contract {
         let result = (!!buffer && buffer.length > 0);
         if(!result){
             let currentTime = new Date();
+
             let myCar = {
                 vin: vin,
                 make: make,
                 model: model,
                 year: year,
-                milage: milage,
-                timeStamp: currentTime,
-                ownerFirstName: ownerFirstName,
-                ownerLastName: ownerLastName
+                milage: [milage],
+                timeStamp: [currentTime],
+                ownerFirstName: [ownerFirstName],
+                ownerLastName: [ownerLastName]
             };
             output = 'Car with vin ' + vin + ' is added';
             await ctx.stub.putState(vin, Buffer.from(JSON.stringify(myCar)));

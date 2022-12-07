@@ -1,6 +1,14 @@
 
 
 fs = require('fs');
+
+
+const fabricNetwork = require('fabric-network');
+const SmartContractUtil = require('./js-smart-contract-util.js'); 
+const os = require('os');
+const path = require('path');
+
+const vinDigitLength = 17;
 let fName = './listOfCars.json';
 
 let randomMin = 20;
@@ -12,14 +20,6 @@ let updateRandomMax = 10;
 let updateMilageMax = 400;
 let updateMilageMin = 50;
 let randomVal;
-
-const fabricNetwork = require('fabric-network');
-const SmartContractUtil = require('./js-smart-contract-util.js'); 
-const os = require('os');
-const path = require('path');
-
-const vinDigitLength = 17;
-
 
 async function main() {
     
@@ -45,7 +45,7 @@ async function main() {
 
         let obj = JSON.parse(fs.readFileSync(fName).toString());
         
-        // generateVin(obj);
+        generateVin(obj);
         setCurrDate(obj);
         addCarsToChain(connectionProfile, options, obj);
         
@@ -64,7 +64,9 @@ async function addCarsToChain(connectionProfile, options, obj) {
 function generateVin(obj) {
     
     obj.forEach(function(p){
-        p.vin = ''+Math.floor(Math.random() * Math.pow(10,vinDigitLength-1))+'';
+        if(p.vin === '' || p.vin.length < vinDigitLength){
+            p.vin = ''+Math.floor(Math.random() * Math.pow(10,vinDigitLength-1))+'';
+        }
     });
     fs.writeFileSync(fName, JSON.stringify(obj, null, 2));
 }
@@ -76,7 +78,7 @@ function setCurrDate(obj) {
     obj.forEach(function(p){
         randomVal = Math.floor(Math.random() * randomMax) + randomMin;
         dateObj.setSeconds(dateObj.getSeconds() + randomVal);
-        p.timeStamp = dateObj;
+        p.timeStamp.push(dateObj);
         
     });
     fs.writeFileSync(fName, JSON.stringify(obj, null, 2));
@@ -93,11 +95,11 @@ async function runServerSimulation(connectionProfile, options, obj){
             
             //Certain time has passed, means the car is at the gas station, data will be updated to the blockchain.
             let currTime = new Date();
-            p.timeStamp = currTime;
+            p.timeStamp.push(currTime);
             let milageDiff = Math.floor(Math.random() * updateMilageMax) + updateMilageMin;
-            p.milage = (parseInt(p.milage)+milageDiff).toString();
+            p.milage.push((parseInt(p.milage)+milageDiff).toString());
 
-            submitCar(connectionProfile, options, p);
+            updateCar(connectionProfile, options, p);
             console.log('Car with vin: '+ p.vin +' has updated it\'s milage by '+milageDiff+'.');
 
             
@@ -105,7 +107,26 @@ async function runServerSimulation(connectionProfile, options, obj){
     }
     
 }
+async function updateCar(connectionProfile, options, jsonObj) {
+    
+    let vin = jsonObj.vin;
+    let milage = jsonObj.milage;
+    let timeStamp = jsonObj.timeStamp;
+    let ownerFirstName = jsonObj.ownerFirstName;
+    let ownerLastName = jsonObj.ownerLastName;
+    
+    const args = [vin, milage, timeStamp, ownerFirstName, ownerLastName];
 
+    let gateway = new fabricNetwork.Gateway();
+    await gateway.connect(connectionProfile, options);
+    const response = await SmartContractUtil.submitTransaction('MyContract', 'update', args, gateway); 
+    gateway.disconnect();
+    // Returns buffer of transaction return value
+    console.log(response.toString());
+   
+    // console.log(JSON.parse(response.toString()));
+    
+}
 async function submitCar(connectionProfile, options, jsonObj) {
     
     let vin = jsonObj.vin;
