@@ -1,21 +1,21 @@
 [
   {
-    "vin": "123456789",
+    "vin": "2413340296329911",
     "make": "Honda",
     "model": "civic",
     "year": "2012",
     "milage": "122304",
-    "timeStamp": "2022-12-06T00:38:06.151Z",
+    "timeStamp": "2022-12-07T06:57:19.281Z",
     "ownerFirstName": "Alice",
     "ownerLastName": "Parker"
   },
   {
-    "vin": "987654321",
+    "vin": "3674553684652324",
     "make": "Toyota",
     "model": "Corolla",
     "year": "2014",
     "milage": "323945",
-    "timeStamp": "2022-12-06T00:38:06.151Z",
+    "timeStamp": "2022-12-07T06:57:19.281Z",
     "ownerFirstName": "Mr.",
     "ownerLastName": "Bob"
   }

@@ -129,7 +129,7 @@ class MyContract extends Contract {
                 ownerFirstName: ownerFirstName,
                 ownerLastName: ownerLastName
             };
-            output = 'Added the car';
+            output = 'Added the car with vin: ' + myCar.vin;
             await ctx.stub.putState(vin, Buffer.from(JSON.stringify(myCar)));
             
         }
