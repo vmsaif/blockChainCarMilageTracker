@@ -35,8 +35,7 @@ export default {
     return {
       input: {
         data: ""
-      },
-      tableData: []
+      }
     };
   },
 
