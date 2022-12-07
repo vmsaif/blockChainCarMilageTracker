@@ -33,13 +33,18 @@
     
     methods: {
       async queryByVim() {
+        console.log('this.input: ');
+        console.log(this.input);
         if (!this.input.vim) {
+          console.log('this.input$#: ');
           let response = 'Please enter a Vim to query for.';
           this.input.data = response;
         } else {
+         
           const apiResponse = await PostsService.queryByVim(this.input.vim);
           console.log(apiResponse);
           this.input = apiResponse;
+          
         }
       }
     }

@@ -11,18 +11,27 @@ class MyContract extends Contract {
         await ctx.stub.putState('INSTANTIATE', Buffer.from(JSON.stringify(instantiate)));
     }
 
+    //take argument and create a car object to be updated to the ledger
+    // vin stands for vehicle identification number
+
+    //this function takes json object as args.
+    // async addACar(ctx, jsonObj) {
+    //     let output = 'Failed';
+    //     const result = await ctx.stub.putState(vin, Buffer.from(JSON.stringify(jsonObj)));
+    //     if(!result.error){
+    //         return "SUCESS"
+    //     }
+    //     return output;
+    // }
+    // look up car data by it's vin number
     async query(ctx, vin) {
-        const returnAsBytes = await ctx.stub.getState(vin);
-        let result = (!!returnAsBytes && returnAsBytes.length > 0);
-        if (!result){
-            let response = {};
-            response.error = `The car with vin ${vin} does not exist`;
-            return response;
-        }
-        const returnMSG = JSON.parse(returnAsBytes.toString());
-        return returnMSG;
+        console.info('querying for the car by vin: ' + vin);
+        let returnAsBytes = await ctx.stub.getState(vin);
+        let result = JSON.parse(returnAsBytes);
+        return JSON.stringify(result);
     }
 
+  
 
     async checkInvalidMilage(ctx, vin) {
         output = false;
@@ -104,23 +113,23 @@ class MyContract extends Contract {
         return returnMSG;
     }
 
-    async add(ctx, vin, make, model, year, milage,  ownerFirstName, ownerLastName) {
+    async add(ctx, vin, make, model, year, milage, timeStamp, ownerFirstName, ownerLastName) {
         let output = 'Vehicle Already Exists.';
         const buffer = await ctx.stub.getState(vin);
         let result = (!!buffer && buffer.length > 0);
         if(!result){
-            let currentTime = new Date();
+          
             let myCar = {
                 vin: vin,
                 make: make,
                 model: model,
                 year: year,
                 milage: milage,
-                timeStamp: currentTime,
+                timeStamp: timeStamp,
                 ownerFirstName: ownerFirstName,
                 ownerLastName: ownerLastName
             };
-            output = 'Car with vin ' + vin + ' is added';
+            output = 'Added the car';
             await ctx.stub.putState(vin, Buffer.from(JSON.stringify(myCar)));
             
         }

@@ -80,7 +80,8 @@ async function submitCar(jsonObj) {
 
     console.log("end");
 
-    let vin = jsonObj.vin; 
+    let vin = jsonObj.vin;
+    
     let make = jsonObj.make;
     let model = jsonObj.model;
     let year = jsonObj.year;
@@ -105,7 +106,7 @@ async function submitCar(jsonObj) {
 async function queryCar(myKey){
     const key = myKey;
     const qArgs = [key];
-    
+
     try{
         await gateway.connect(connectionProfile, options);
         const qResponse = await SmartContractUtil.submitTransaction('MyContract', 'query', qArgs, gateway); // Returns buffer of transaction return value

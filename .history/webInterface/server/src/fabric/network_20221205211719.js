@@ -3,7 +3,7 @@
 
 
 const fabricNetwork = require('fabric-network');
-const SmartContractUtil = require('./js-smart-contract-util.js'); 
+const SmartContractUtil = require('./src/fabric/js-smart-contract-util.js'); 
 const os = require('os');
 const path = require('path');
 const { fileURLToPath } = require('url')
@@ -30,8 +30,8 @@ exports.connectToNetwork = async function (userName) {
             enabled: discoveryEnabled
         }
     };
-    await gateway.connect(connectionProfile, networkObj);
-    
+    return networkObj;
+
   } catch (error) {
     console.log(`Error processing transaction. ${error}`);
     console.log(error.stack);
@@ -40,7 +40,7 @@ exports.connectToNetwork = async function (userName) {
     return response;
   } finally {
     console.log('Done connecting to network.');
-    return "sucess"
+    // gateway.disconnect();
   }
 };
 
@@ -48,31 +48,33 @@ exports.invoke = async function (networkObj, isQuery, func, args) {
   try {
     console.log('inside invoke');
     console.log(`isQuery: ${isQuery}, func: ${func}, args: ${args}`);
-  
+    console.log(util.inspect(networkObj));
+
+
+    // console.log(util.inspect(JSON.parse(args[0])));
 
     if (isQuery === true) {
       console.log('inside isQuery');
 
       if (args) {
         console.log('inside isQuery, args');
-        console.log(typeof args);
         console.log(args);
-        let response = await SmartContractUtil.evaluateTransaction('MyContract', func, args, gateway);
+        let response = await networkObj.contract.evaluateTransaction(func, args);
         console.log(response);
         console.log(`Transaction ${func} with args ${args} has been evaluated`);
 
-        await gateway.disconnect();
+        await networkObj.gateway.disconnect();
 
         return response;
 
       } else {
-        let response = await SmartContractUtil.evaluateTransaction(func);
+        let response = await networkObj.contract.evaluateTransaction(func);
         console.log(typeof response);
         console.log(response);
         console.log(JSON.stringify(response));
         console.log(`Transaction ${func} without args has been evaluated`);
 
-        await gateway.disconnect();
+        await networkObj.gateway.disconnect();
 
         return response;
       }
@@ -85,33 +87,31 @@ exports.invoke = async function (networkObj, isQuery, func, args) {
         console.log(func);
         console.log(typeof args);
 
-        // args = JSON.parse(args[0]);
+        args = JSON.parse(args[0]);
 
-        // console.log(args);
-        // console.log(typeof args)
-        // args = JSON.stringify(args);
-        // console.log(args);
-        // console.log(typeof args)
+        console.log(util.inspect(args));
+        args = JSON.stringify(args);
+        console.log(util.inspect(args));
 
         console.log('before submit');
-
-        let response = await SmartContractUtil.submitTransaction('MyContract', func, args, gateway);
+        console.log(util.inspect(networkObj));
+        let response = await networkObj.contract.submitTransaction(func, args);
         console.log('after submit');
 
         console.log(response);
         console.log(`Transaction ${func} with args ${args} has been submitted`);
 
-        await gateway.disconnect();
+        await networkObj.gateway.disconnect();
 
         return response;
 
 
       } else {
-        let response = await SmartContractUtil.submitTransaction(func);
+        let response = await networkObj.contract.submitTransaction(func);
         console.log(response);
         console.log(`Transaction ${func} with args has been submitted`);
 
-        awaitgateway.disconnect();
+        await networkObj.gateway.disconnect();
 
         return response;
       }

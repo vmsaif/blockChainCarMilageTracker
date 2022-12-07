@@ -5,7 +5,7 @@
 
 
 const fabricNetwork = require('fabric-network');
-const SmartContractUtil = require('./src/fabric/js-smart-contract-util.js'); 
+const SmartContractUtil = require('./js-smart-contract-util.js'); 
 const os = require('os');
 const path = require('path');
 const { fileURLToPath } = require('url')

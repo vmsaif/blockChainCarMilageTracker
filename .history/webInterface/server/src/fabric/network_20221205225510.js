@@ -40,7 +40,7 @@ exports.connectToNetwork = async function (userName) {
     return response;
   } finally {
     console.log('Done connecting to network.');
-    return "sucess"
+    // gateway.disconnect();
   }
 };
 
@@ -55,7 +55,6 @@ exports.invoke = async function (networkObj, isQuery, func, args) {
 
       if (args) {
         console.log('inside isQuery, args');
-        console.log(typeof args);
         console.log(args);
         let response = await SmartContractUtil.evaluateTransaction('MyContract', func, args, gateway);
         console.log(response);
@@ -81,9 +80,9 @@ exports.invoke = async function (networkObj, isQuery, func, args) {
       if (args) {
         console.log('notQuery, args');
         console.log('$$$$$$$$$$$$$ args: ');
-        console.log(args);
+        console.log(args[0]);
         console.log(func);
-        console.log(typeof args);
+        console.log(typeof args[0]);
 
         // args = JSON.parse(args[0]);
 
@@ -95,7 +94,7 @@ exports.invoke = async function (networkObj, isQuery, func, args) {
 
         console.log('before submit');
 
-        let response = await SmartContractUtil.submitTransaction('MyContract', func, args, gateway);
+        let response = await SmartContractUtil.submitTransaction('MyContract', func, args[0], gateway);
         console.log('after submit');
 
         console.log(response);

@@ -38,19 +38,16 @@ app.get('/queryAll', async (req, res) => {
 
 
 
-app.post('/addCar', async (req, res) => {
+app.post('/addCar', async(req,res) =>{
   let networkObj = await network.connectToNetwork(appAdmin);
-
-  let vin = req.body.vin;
-  let make = req.body.make;
-  let model = req.body.model;
-  let year = req.body.year;
-  let milage = req.body.milage;
-  let ownerFirstName = req.body.ownerFirstName;
-  let ownerLastName = req.body.ownerLastName;
-  const args = [vin, make, model, year, milage, ownerFirstName, ownerLastName];
+  console.log(networkObj);
   
-  let response = await network.invoke(networkObj, false, 'add', args);
+  req.body = JSON.stringify(req.body);
+  console.log('req.body');
+  console.log(req.body);
+  let args = [req.body];
+
+  let response = await network.invoke(networkObj, false, 'addACar', args);
   if (response.error) {
     res.send(response.error);
   } else {
@@ -67,8 +64,10 @@ app.post('/queryByVim', async (req, res) => {
 
   let networkObj = await network.connectToNetwork(appAdmin);
   console.log('after network OBj');
-  const qArgs = [req.body.vim];
+  const key = res.body['vim'];
+  const qArgs = [key];
   let response = await network.invoke(networkObj, true, 'query', qArgs);
+  console.log(response);
   response = JSON.parse(response);
   if (response.error) {
     console.log('inside eRRRRR');

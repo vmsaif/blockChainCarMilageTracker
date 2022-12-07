@@ -1,6 +1,6 @@
 {
   "name": "blockChainCarMilageTracker",
-  "version": "0.2.0",
+  "version": "0.1.7",
   "description": "My Smart Contract",
   "main": "index.js",
   "engines": {

@@ -105,7 +105,7 @@ async function submitCar(jsonObj) {
 async function queryCar(myKey){
     const key = myKey;
     const qArgs = [key];
-    
+
     try{
         await gateway.connect(connectionProfile, options);
         const qResponse = await SmartContractUtil.submitTransaction('MyContract', 'query', qArgs, gateway); // Returns buffer of transaction return value
