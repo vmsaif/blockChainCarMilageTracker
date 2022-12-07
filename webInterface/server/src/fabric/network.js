@@ -57,13 +57,13 @@ exports.invoke = async function (networkObj, isQuery, func, args) {
         console.log('inside isQuery, args');
         console.log(typeof args);
         console.log(args);
-        let response = await SmartContractUtil.evaluateTransaction('MyContract', func, args, gateway);
-        console.log(response);
+        let response1 = await SmartContractUtil.evaluateTransaction('MyContract', func, args, gateway);
+        console.log(response1);
         console.log(`Transaction ${func} with args ${args} has been evaluated`);
 
         await gateway.disconnect();
 
-        return response;
+        return response1;
 
       } else {
         let response = await SmartContractUtil.evaluateTransaction(func);
