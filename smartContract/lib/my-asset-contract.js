@@ -64,8 +64,14 @@ class MyContract extends Contract {
                 
                 foundTimeStamp.push(currentTime);
                 if(milage.length > 0){
-                    foundMilage.push(milage);
-                    anyData = true;
+                    if(foundMilage[foundMilage.length-1] <= milage)
+                    {
+                        foundMilage.push(milage);
+                        anyData = true;
+                    } else {
+                        returnMSG = 'Invalid Milage. New milage has to be greater or equals to the old milage.';
+                    }
+                    
                 } else {
                     foundMilage.push(foundMilage[foundMilage.length-1]);
                 }
