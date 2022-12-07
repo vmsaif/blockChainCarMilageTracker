@@ -1,14 +1,6 @@
 import Api from '@/services/api'
 
 export default {
-  updateCar(vin,ownerFirstName,ownerLastName,milage){
-    return Api().post('update',{
-      vin:vin,
-      milage:milage,
-      ownerFirstName:ownerFirstName,
-      ownerLastName:ownerLastName
-    })
-  },
   
   addCar(vin,make,model,year,milage,ownerFirstName, ownerLastName){
     return Api().post('addCar', {

@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Home from '@/components/Home'
-import Update from '@/components/Update'
+
 import AddCar from'@/components/addCar'
 import QueryByVim from'@/components/QueryByVim'
 
@@ -20,11 +20,6 @@ export default new Router({
       path: '/addCar',
       name: 'AddCar',
       component: AddCar
-    },
-    {
-      path: '/update',
-      name: 'Update',
-      component: Update
     },
     {
       path: '/querybyvim',

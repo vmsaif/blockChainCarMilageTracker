@@ -40,19 +40,12 @@ app.get('/queryAll', async (req, res) => {
 app.post('/update',async(req,res)=>{
   let networkObj = await network.connectToNetwork(appAdmin);
   let vin = req.body.vin;
+  console.log(vin);
   let milage = req.body.milage;
+  console.log(milage);
   let ownerFirstName = req.body.ownerFirstName;
   let ownerLastName = req.body.ownerLastName;
-  const args = [vin, milage, ownerFirstName, ownerLastName];
-  let response = await network.invoke(networkObj, false, 'update', args);
-  
-  if (response.error) {
-    res.send(response.error);
-  } else {
-    console.log('response: ');
-    console.log(response);
-    res.send(response);
-  }
+  console.log(ownerFirstName);
 });
 app.post('/addCar', async (req, res) => {
   let networkObj = await network.connectToNetwork(appAdmin);

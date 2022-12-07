@@ -2,7 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Home from '@/components/Home'
-import Update from '@/components/Update'
+import QueryAll from '@/components/QueryAll'
+import Register from '@/components/Register'
+import Login from '@/components/Login'
 import AddCar from'@/components/addCar'
 import QueryByVim from'@/components/QueryByVim'
 
@@ -15,21 +17,31 @@ export default new Router({
       name: 'Home',
       component: Home
     },
-    
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register
+    },
     {
       path: '/addCar',
       name: 'AddCar',
       component: AddCar
     },
     {
-      path: '/update',
-      name: 'Update',
-      component: Update
-    },
-    {
       path: '/querybyvim',
       name:'QueryByVim',
       component:QueryByVim
-    }
+    },
+    
+    {
+      path: '/queryAll',
+      name: 'QueryAll',
+      component: QueryAll
+    } 
   ]
 })

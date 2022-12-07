@@ -13,14 +13,27 @@
       <br>
     </form>
 
-    <el-table :data="tableData" style="width: 100%" :default-sort="{ prop: 'date', order: 'descending' }">
-      <el-table-column prop="date" label="Timestamp" sortable width="180">
-      </el-table-column>
-      <el-table-column prop="name" label="Name" sortable width="180">
-      </el-table-column>
-      <el-table-column prop="address" label="Milage" :formatter="formatter">
-      </el-table-column>
-    </el-table>
+    <el-table
+    :data="tableData"
+    :default-sort = "{prop: 'date', order: 'descending'}"
+    style="width: 100%">
+    <el-table-column
+      prop="date"
+      label="Date"
+      sortable
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="name"
+      label="Name"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="address"
+      label="Address"
+      :formatter="formatter">
+    </el-table-column>
+  </el-table>
   </div>
 
 
@@ -35,8 +48,7 @@ export default {
     return {
       input: {
         data: ""
-      },
-      tableData: []
+      }
     };
   },
 

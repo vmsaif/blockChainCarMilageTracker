@@ -26,7 +26,7 @@
             <el-form-item label="milage" prop="milage">
                 <el-input v-model="registerData.milage"></el-input>
             </el-form-item>
-
+            
             <el-form-item>
                 <el-button type="primary" @click="submitForm('registerData')">Register</el-button>
                 <el-button @click="resetForm('registerData')">Reset</el-button>
@@ -48,13 +48,13 @@ export default {
     data() {
         return {
             registerData: {
-                firstname: '',
-                lastname: '',
-                vin: '',
-                make: '',
-                model: '',
-                year: '',
-                milage: ''
+                firstname:'',
+                lastname:'',
+                vin:'',
+                make:'',
+                model:'',
+                year:'',
+                milage:''
             },
             registerReponse: {
                 data: ""
@@ -102,15 +102,13 @@ export default {
         },
         async registerCar() {
             const apiResponse = await PostsService.addCar(
+                this.registerData.firstname,
+                this.registerData.lastname,
                 this.registerData.vin,
                 this.registerData.make,
                 this.registerData.model,
                 this.registerData.year,
-                this.registerData.milage,
-                this.registerData.firstname,
-                this.registerData.lastname
-
-
+                this.registerData.milage
             );
             console.log(apiResponse);
             alert(apiResponse);
