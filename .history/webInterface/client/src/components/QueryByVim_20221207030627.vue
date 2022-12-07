@@ -47,7 +47,7 @@ export default {
         this.input.data = response;
       } else {
         const apiResponse = await PostsService.queryByVim(this.input.vim);
-        alert(typeof apiResponse);
+        console.log(typeof apiResponse);
         this.input = apiResponse;
       }
     },
