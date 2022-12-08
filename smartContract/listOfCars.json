@@ -1,22 +1,42 @@
 [
   {
-    "vin": "5973815347680835",
+    "vin": "4165750804254708",
     "make": "Honda",
     "model": "civic",
     "year": "2012",
-    "milage": "122304",
-    "timeStamp": "2022-12-07T06:57:19.281Z",
-    "ownerFirstName": "Alice",
-    "ownerLastName": "Parker"
+    "milage": [
+      "122304"
+    ],
+    "timeStamp": [
+      "2022-12-07T21:32:17.355Z",
+      "2022-12-07T21:38:50.877Z",
+      "2022-12-07T21:40:39.862Z"
+    ],
+    "ownerFirstName": [
+      "Alice"
+    ],
+    "ownerLastName": [
+      "Parker"
+    ]
   },
   {
-    "vin": "1327648787633180",
+    "vin": "144203771930782",
     "make": "Toyota",
     "model": "Corolla",
     "year": "2014",
-    "milage": "323945",
-    "timeStamp": "2022-12-07T06:57:19.281Z",
-    "ownerFirstName": "Mr.",
-    "ownerLastName": "Bob"
+    "milage": [
+      "323945"
+    ],
+    "timeStamp": [
+      "2022-12-07T21:32:17.355Z",
+      "2022-12-07T21:38:50.877Z",
+      "2022-12-07T21:40:39.862Z"
+    ],
+    "ownerFirstName": [
+      "Mr."
+    ],
+    "ownerLastName": [
+      "Bob"
+    ]
   }
 ]

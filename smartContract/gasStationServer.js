@@ -14,8 +14,8 @@ let fName = './listOfCars.json';
 let randomMin = 20;
 let randomMax = 59;
 
-let updateRandomMin = 3;
-let updateRandomMax = 10;
+let updateRandomMin = 2;
+let updateRandomMax = 4;
 
 let updateMilageMax = 400;
 let updateMilageMin = 50;
@@ -49,7 +49,7 @@ async function main() {
         setCurrDate(obj);
         addCarsToChain(connectionProfile, options, obj);
         
-        runServerSimulation(connectionProfile, options, obj);
+        // runServerSimulation(connectionProfile, options, obj);
 
     } catch(err){
         console.log(err.stack)
@@ -76,8 +76,10 @@ function setCurrDate(obj) {
     let diff = 30;
     
     obj.forEach(function(p){
+        
         randomVal = Math.floor(Math.random() * randomMax) + randomMin;
         dateObj.setSeconds(dateObj.getSeconds() + randomVal);
+        
         p.timeStamp.push(dateObj);
         
     });
@@ -86,21 +88,22 @@ function setCurrDate(obj) {
 
 async function runServerSimulation(connectionProfile, options, obj){
 
-    while(true)
+    // while(true)
     {
-        obj.forEach(function(p){
+        await obj.forEach(function(p){
             
             randomVal = Math.floor(Math.random() * updateRandomMax) + updateRandomMin;
             sleep(randomVal);
             
             //Certain time has passed, means the car is at the gas station, data will be updated to the blockchain.
-            let currTime = new Date();
-            p.timeStamp.push(currTime);
+            // let currTime = new Date();
+            // p.timeStamp.push(currTime);
             let milageDiff = Math.floor(Math.random() * updateMilageMax) + updateMilageMin;
             p.milage.push((parseInt(p.milage)+milageDiff).toString());
 
-            updateCar(connectionProfile, options, p);
+            let response = updateCar(connectionProfile, options, p);
             console.log('Car with vin: '+ p.vin +' has updated it\'s milage by '+milageDiff+'.');
+            console.log(response);
 
             
         });
@@ -111,20 +114,20 @@ async function updateCar(connectionProfile, options, jsonObj) {
     
     let vin = jsonObj.vin;
     let milage = jsonObj.milage;
-    let timeStamp = jsonObj.timeStamp;
+    // let timeStamp = jsonObj.timeStamp;
     let ownerFirstName = jsonObj.ownerFirstName;
     let ownerLastName = jsonObj.ownerLastName;
     
-    const args = [vin, milage, timeStamp, ownerFirstName, ownerLastName];
+    const args = [vin, milage, ownerFirstName, ownerLastName];
 
     let gateway = new fabricNetwork.Gateway();
     await gateway.connect(connectionProfile, options);
     const response = await SmartContractUtil.submitTransaction('MyContract', 'update', args, gateway); 
     gateway.disconnect();
     // Returns buffer of transaction return value
-    console.log(response.toString());
+    
    
-    // console.log(JSON.parse(response.toString()));
+    return response;
     
 }
 async function submitCar(connectionProfile, options, jsonObj) {
@@ -134,11 +137,10 @@ async function submitCar(connectionProfile, options, jsonObj) {
     let model = jsonObj.model;
     let year = jsonObj.year;
     let milage = jsonObj.milage;
-    let timeStamp = jsonObj.timeStamp;
     let ownerFirstName = jsonObj.ownerFirstName;
     let ownerLastName = jsonObj.ownerLastName;
     
-    const args = [vin, make, model, year, milage, timeStamp, ownerFirstName, ownerLastName];
+    const args = [vin, make, model, year, milage, ownerFirstName, ownerLastName];
 
     let gateway = new fabricNetwork.Gateway();
     await gateway.connect(connectionProfile, options);
