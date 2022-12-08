@@ -9,17 +9,17 @@ const os = require('os');
 const path = require('path');
 
 const vinDigitLength = 17;
-const milageDigitLength = 6;
+
 let fName = './listOfCars.json';
 
-let randomMin = 20;
-let randomMax = 59;
+let randomMin = 20; //in seconds
+let randomMax = 59; //in seconds
 
-let updateRandomMin = 2;
-let updateRandomMax = 4;
+let updateRandomMin = 3; //in seconds
+let updateRandomMax = 6; //in seconds
 
-let updateMilageMax = 400;
-let updateMilageMin = 50;
+let updateMilageMax = 400; //in mile unit
+let updateMilageMin = 50; //in mile unit
 let randomVal;
 
 async function main() {
@@ -47,7 +47,7 @@ async function main() {
         let obj = JSON.parse(fs.readFileSync(fName).toString());
         
         // generateVin(obj);
-        // addCarsToChain(connectionProfile, options, obj);
+        await addCarsToChain(connectionProfile, options, obj);
         // sleep(5);
         runServerSimulation(connectionProfile, options, obj);
 
@@ -58,7 +58,7 @@ async function main() {
 
 async function addCarsToChain(connectionProfile, options, obj) {
     for (let i = 0; i < obj.length; i++){
-        submitCar(connectionProfile, options, obj[i]);
+        await submitCar(connectionProfile, options, obj[i]);
     }
 }
 function generateVin(obj) {
