@@ -9,6 +9,7 @@ const os = require('os');
 const path = require('path');
 
 const vinDigitLength = 17;
+const milageDigitLength = 6;
 let fName = './listOfCars.json';
 
 let randomMin = 20;
@@ -45,11 +46,10 @@ async function main() {
 
         let obj = JSON.parse(fs.readFileSync(fName).toString());
         
-        generateVin(obj);
-        setCurrDate(obj);
-        addCarsToChain(connectionProfile, options, obj);
-        
-        // runServerSimulation(connectionProfile, options, obj);
+        // generateVin(obj);
+        // addCarsToChain(connectionProfile, options, obj);
+        // sleep(5);
+        runServerSimulation(connectionProfile, options, obj);
 
     } catch(err){
         console.log(err.stack)
@@ -65,7 +65,7 @@ function generateVin(obj) {
     
     obj.forEach(function(p){
         if(p.vin === '' || p.vin.length < vinDigitLength){
-            p.vin = ''+Math.floor(Math.random() * Math.pow(10,vinDigitLength-1))+'';
+            p.vin = ''+Math.floor(Math.random() * Math.pow(10,vinDigitLength))+'';
         }
     });
     fs.writeFileSync(fName, JSON.stringify(obj, null, 2));
@@ -73,13 +73,10 @@ function generateVin(obj) {
 function setCurrDate(obj) {
     
     let dateObj = new Date();
-    let diff = 30;
-    
     obj.forEach(function(p){
         
         randomVal = Math.floor(Math.random() * randomMax) + randomMin;
         dateObj.setSeconds(dateObj.getSeconds() + randomVal);
-        
         p.timeStamp.push(dateObj);
         
     });
@@ -88,28 +85,30 @@ function setCurrDate(obj) {
 
 async function runServerSimulation(connectionProfile, options, obj){
 
-    // while(true)
+    while(true)
     {
-        await obj.forEach(function(p){
+        
+        for(let i = 0; i < obj.length; i++){
+            
+            let milageDiff = Math.floor(Math.random() * updateMilageMax) + updateMilageMin;
+            
+            //Certain time has passed, means the car is at the gas station, data will be updated to the blockchain.
+            
+            obj[i].milage = parseInt(obj[i].milage)+milageDiff;
+            
+            
+            console.log('Car with vin: '+ obj[i].vin +' has updated it\'s milage by '+milageDiff+'.');
+            let response = await updateCar(connectionProfile, options, obj[i]);
             
             randomVal = Math.floor(Math.random() * updateRandomMax) + updateRandomMin;
             sleep(randomVal);
-            
-            //Certain time has passed, means the car is at the gas station, data will be updated to the blockchain.
-            // let currTime = new Date();
-            // p.timeStamp.push(currTime);
-            let milageDiff = Math.floor(Math.random() * updateMilageMax) + updateMilageMin;
-            p.milage.push((parseInt(p.milage)+milageDiff).toString());
-
-            let response = updateCar(connectionProfile, options, p);
-            console.log('Car with vin: '+ p.vin +' has updated it\'s milage by '+milageDiff+'.');
-            console.log(response);
-
-            
-        });
+        }
+        
     }
     
 }
+
+
 async function updateCar(connectionProfile, options, jsonObj) {
     
     let vin = jsonObj.vin;
@@ -117,16 +116,17 @@ async function updateCar(connectionProfile, options, jsonObj) {
     // let timeStamp = jsonObj.timeStamp;
     let ownerFirstName = jsonObj.ownerFirstName;
     let ownerLastName = jsonObj.ownerLastName;
-    
+    // console.log("---"+milage);
     const args = [vin, milage, ownerFirstName, ownerLastName];
 
     let gateway = new fabricNetwork.Gateway();
     await gateway.connect(connectionProfile, options);
     const response = await SmartContractUtil.submitTransaction('MyContract', 'update', args, gateway); 
     gateway.disconnect();
-    // Returns buffer of transaction return value
     
-   
+
+    // const returnMSG = JSON.parse(response.toString());
+    console.log(response.toString());
     return response;
     
 }
@@ -147,7 +147,7 @@ async function submitCar(connectionProfile, options, jsonObj) {
     const response = await SmartContractUtil.submitTransaction('MyContract', 'add', args, gateway); 
     gateway.disconnect();
     // Returns buffer of transaction return value
-    console.log(response.toString());
+    // console.log(response.toString());
    
     // console.log(JSON.parse(response.toString()));
     

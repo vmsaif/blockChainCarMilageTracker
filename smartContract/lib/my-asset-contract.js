@@ -47,7 +47,7 @@ class MyContract extends Contract {
     async update(ctx, vin, milage, ownerFirstName, ownerLastName) {
 
         let returnMSG = "Vin: " + vin + " has not updated.";
-        const qArgs = [vin];
+        // const qArgs = [vin];
 
         try {
             const stringRespond = await ctx.stub.getState(vin);
@@ -100,10 +100,13 @@ class MyContract extends Contract {
                         ownerLastName: foundOwnerLastName
                     };
                     await ctx.stub.putState(vin, Buffer.from(JSON.stringify(myCar)));
-                    returnMSG = "Vin: " + vin + " has updated sucessfully";
+                    returnMSG = "Vin: " + vin + " has updated sucessfully to the blockchain.";
                 }
-            } 
+            } else {
+                returnMSG = "Vin: " + vin + " not found.";
+            }
         } catch(error) {
+            
             console.log(error.stack);
         }
         return returnMSG;
