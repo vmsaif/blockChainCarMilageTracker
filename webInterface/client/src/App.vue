@@ -8,11 +8,12 @@
         </div> -->
         <h1>Car Web</h1>
         
-        <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect"
+        <el-menu class="el-menu-demo" mode="horizontal"
           background-color="#4799e6aa" text-color="#333" active-text-color="#ffd04b">
-          <el-menu-item index="1"><router-link to="/Update">Updata information</router-link></el-menu-item>
-          <el-menu-item index="2" ><router-link to="/AddCar">Add car</router-link></el-menu-item>
-          <el-menu-item index="3" ><router-link to="/QueryByVim">Query By Vim</router-link></el-menu-item>
+          <el-menu-item index="1"><router-link to="/">Home</router-link></el-menu-item>
+          <el-menu-item index="2"><router-link to="/Update">Updata information</router-link></el-menu-item>
+          <el-menu-item index="3" ><router-link to="/AddCar">Add car</router-link></el-menu-item>
+          <el-menu-item index="4" ><router-link to="/QueryByVim">Query By Vim</router-link></el-menu-item>
           
           <!-- <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item> -->
         </el-menu>

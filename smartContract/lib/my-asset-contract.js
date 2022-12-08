@@ -16,7 +16,7 @@ class MyContract extends Contract {
         if (!result){
             let response = {};
             response.error = `The car with vin ${vin} does not exist`;
-            return response;
+            return `The car with vin ${vin} does not exist`;
         }
         const returnMSG = JSON.parse(returnAsBytes.toString());
         return returnMSG;
