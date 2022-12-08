@@ -18,7 +18,7 @@
       </el-table-column>
       <el-table-column prop="name" label="Name" sortable width="180">
       </el-table-column>
-      <el-table-column prop="address" label="Milage" :formatter="formatter">
+      <el-table-column prop="milage" label="Milage">
       </el-table-column>
     </el-table>
   </div>
@@ -42,16 +42,30 @@ export default {
 
   methods: {
     async queryByVim() {
+      this.tableData = [];
       if (!this.input.vim) {
         let response = 'Please enter a Vim to query for.';
         this.input.data = response;
       } else {
         const apiResponse = await PostsService.queryByVim(this.input.vim);
-        alert(typeof apiResponse);
-        this.input = apiResponse;
+        let apiData = apiResponse.data;
+        if (apiData != "The car with vin 12 does not exist") {
+          let record_length = apiData.timeStamp.length;
+          for (let i = 0; i < record_length; i++) {
+            let data = {
+              date: apiData.timeStamp[i],
+              name: apiData.ownerFirstName[i] + " " + apiData.ownerLastName[i],
+              milage: apiData.milage[i]
+            }
+            this.tableData.push(data);
+          }
+          this.input.data = `Car with vin ${apiData.vin} is queried successfully`;
+        } else {
+          this.input.data = apiData;
+        }
       }
     },
-    formatter(row,column){
+    formatter(row, column) {
       return row.address;
     }
   }
