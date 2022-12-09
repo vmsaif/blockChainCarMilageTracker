@@ -20,7 +20,7 @@
                 <el-input v-model="updateData.milage"></el-input>
             </el-form-item>
 
-            <el-form-item>
+            <el-form-item id="myButtons">
                 <el-button type="primary" @click="submitForm('updateData')">Update</el-button>
                 <el-button @click="resetForm('updateData')">Reset</el-button>
             </el-form-item>
@@ -32,7 +32,25 @@
         </el-form>
     </div>
 </template>
-
+<style>
+    .el-input{
+        padding-left: 1vw;
+    }
+    .el-form-item__label{
+        /* width: auto; */
+        white-space: nowrap;
+        padding: 0;
+    }
+    .UpdateCar{
+        justify-content: center;
+        margin-left: 20vw;
+        width: 50vw;
+    }
+    #myButtons{
+        margin-left: 27vw;
+        padding: 0;
+    }
+</style>
 <script>
 import PostsService from "@/services/apiService";
 

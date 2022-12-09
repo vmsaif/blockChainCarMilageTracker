@@ -2,7 +2,7 @@
   <div class="posts">
     <h1>Query By Vim</h1>
     <form v-on:submit="queryByVim">
-      <input type="text" v-model="input.vim" placeholder="Enter Vim to Query">
+      <input id="inputBox" type="text" v-model="input.vim" placeholder="Enter Vim to Query">
       <br>
       <input type="submit" value="Query">
       <br>
@@ -13,7 +13,7 @@
       <br>
     </form>
 
-    <el-table :data="tableData" style="width: 100%" :default-sort="{ prop: 'date', order: 'descending' }">
+    <el-table :data="tableData" :header-cell-style="{textAlign: 'center'}" id="myTable" :default-sort="{ prop: 'date', order: 'descending' }" >
       <el-table-column prop="date" label="Timestamp" sortable width="180">
       </el-table-column>
       <el-table-column prop="name" label="Name" sortable width="180">
@@ -26,6 +26,19 @@
 
 </template>
   
+<style>
+  #tableColumn{
+    
+  }
+  #myTable{
+    justify-content: center;
+    margin-left: 20vw;
+    width: 50vw;
+  }
+  #inputBox{
+    margin-bottom: 2vh;
+  }
+</style>
 <script>
 import PostsService from "@/services/apiService";
 
