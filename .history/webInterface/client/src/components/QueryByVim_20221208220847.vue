@@ -34,7 +34,7 @@
     justify-content: center;
     margin-left: 20vw;
     width: 50vw;
-    margin-top: 10px;
+    margin-top: 10px
   }
   #inputBox{
     margin-bottom: 2vh;
@@ -74,7 +74,7 @@ export default {
             }
             this.tableData.push(data);
           }
-          this.input.data = `Car with vin ${apiData.vin}, make:${apiData.make}, and model:${apiData.model} is queried successfully`;
+          this.input.data = `Car with vin ${apiData.vin} is queried successfully`;
         } else {
           this.input.data = apiData;
         }
