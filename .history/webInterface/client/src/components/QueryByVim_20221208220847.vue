@@ -34,7 +34,7 @@
     justify-content: center;
     margin-left: 20vw;
     width: 50vw;
-    margin-top: 10px;
+    margin-top: 10px
   }
   #inputBox{
     margin-bottom: 2vh;

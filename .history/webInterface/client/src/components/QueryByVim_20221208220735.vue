@@ -34,12 +34,13 @@
     justify-content: center;
     margin-left: 20vw;
     width: 50vw;
-    margin-top: 10px;
   }
   #inputBox{
     margin-bottom: 2vh;
   }
-  
+  b {
+    margin-bottom: 10px;
+  }
 </style>
 <script>
 import PostsService from "@/services/apiService";
