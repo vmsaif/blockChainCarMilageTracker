@@ -14,6 +14,104 @@
     ]
   },
   {
+    "vin": "15202216641653576",
+    "make": "Toyota",
+    "model": "Camry",
+    "year": "2015",
+    "milage": "233142",
+    "timeStamp": [],
+    "ownerFirstName": [
+      "James"
+    ],
+    "ownerLastName": [
+      "Smith"
+    ]
+  },
+  {
+    "vin": "15202216641653576",
+    "make": "Mercedes-Benz",
+    "model": "GLC",
+    "year": "2012",
+    "milage": "12112",
+    "timeStamp": [],
+    "ownerFirstName": [
+      "Michael"
+    ],
+    "ownerLastName": [
+      "Smith"
+    ]
+  },
+  {
+    "vin": "15202216641653576",
+    "make": "Toyota",
+    "model": "Highlander",
+    "year": "2015",
+    "milage": "114322",
+    "timeStamp": [],
+    "ownerFirstName": [
+      "Robert"
+    ],
+    "ownerLastName": [
+      "Smith"
+    ]
+  },
+  {
+    "vin": "15202216641653576",
+    "make": "GMC",
+    "model": "Sierra",
+    "year": "2014",
+    "milage": "223124",
+    "timeStamp": [],
+    "ownerFirstName": [
+      "Maria"
+    ],
+    "ownerLastName": [
+      "Garcia"
+    ]
+  },
+  {
+    "vin": "15202216641653576",
+    "make": "Toyota",
+    "model": "Tacoma",
+    "year": "2017",
+    "milage": "009876",
+    "timeStamp": [],
+    "ownerFirstName": [
+      "David"
+    ],
+    "ownerLastName": [
+      "Smith"
+    ]
+  },
+  {
+    "vin": "15202216641653576",
+    "make": "Honda",
+    "model": "CR-V",
+    "year": "2013",
+    "milage": "221257",
+    "timeStamp": [],
+    "ownerFirstName": [
+      "Maria"
+    ],
+    "ownerLastName": [
+      "Rodriguez"
+    ]
+  },
+  {
+    "vin": "15202216641653576",
+    "make": "Honda",
+    "model": "Civic",
+    "year": "2015",
+    "milage": "321112",
+    "timeStamp": [],
+    "ownerFirstName": [
+      "Robert"
+    ],
+    "ownerLastName": [
+      "Johnson"
+    ]
+  },
+  {
     "vin": "62307063601523310",
     "make": "Toyota",
     "model": "Corolla",

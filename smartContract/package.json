@@ -1,5 +1,5 @@
 {
-  "name": "blockChainCarMilageTracker",
+  "name": "block-chain-car-milage-tracker",
   "version": "0.1.5",
   "description": "My Smart Contract",
   "main": "index.js",
