@@ -77,8 +77,8 @@ export default {
             }
             this.tableData.push(data);
           }
-          this.input.data = `Queried Successfull \n
-          Vin: ${apiData.vin}, Make: ${apiData.make}, Model: ${apiData.model}, Year: ${apiData.year} `;
+          this.input.data = `Queried Successfull` + `\n`+ 
+          `Vin: ${apiData.vin}, Make: ${apiData.make}, Model: ${apiData.model}, Year: ${apiData.year} `;
         } else {
           this.input.data = apiData;
         }

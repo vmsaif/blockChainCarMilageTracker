@@ -8,7 +8,7 @@
       <br>
       <br>
       <span v-if="input">
-        <b id="msgBox">{{ input.data }}</b>
+        <b>{{ input.data }}</b>
       </span>
       <br>
     </form>
@@ -35,9 +35,6 @@
     margin-left: 20vw;
     width: 50vw;
     margin-top: 10px;
-  }
-  #msgBox{
-    white-space: pre-wrap;
   }
   #inputBox{
     margin-bottom: 2vh;
@@ -77,8 +74,8 @@ export default {
             }
             this.tableData.push(data);
           }
-          this.input.data = `Queried Successfull \n
-          Vin: ${apiData.vin}, Make: ${apiData.make}, Model: ${apiData.model}, Year: ${apiData.year} `;
+          this.input.data = `Queried Successfull` + "\n"+ 
+          `Vin: ${apiData.vin}, Make: ${apiData.make}, Model: ${apiData.model}, Year: ${apiData.year} `;
         } else {
           this.input.data = apiData;
         }
