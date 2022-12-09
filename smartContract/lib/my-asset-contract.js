@@ -100,7 +100,7 @@ class MyContract extends Contract {
                         ownerLastName: foundOwnerLastName
                     };
                     await ctx.stub.putState(vin, Buffer.from(JSON.stringify(myCar)));
-                    returnMSG = "Vin: " + vin + " has updated sucessfully to the blockchain.";
+                    returnMSG = "--> Vin: " + vin + " has updated sucessfully to the blockchain.";
                 }
             } else {
                 returnMSG = "Vin: " + vin + " not found.";

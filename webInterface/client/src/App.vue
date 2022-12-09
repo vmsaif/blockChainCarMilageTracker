@@ -49,6 +49,7 @@
 }
 
 .div1 {
+  width: auto;
   margin-top: auto;
   margin-bottom: auto;
   margin-left: 2vw;
@@ -68,7 +69,7 @@
   border-radius: 7px;
   justify-content: center;
   margin: auto;
-  width: 50vw;
+  min-width: 50vw;
   background: "#E9EEF3";
   /* background-color: #4799e6aa; */
   color: #333;
