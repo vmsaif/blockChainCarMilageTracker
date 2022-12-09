@@ -1,6 +1,5 @@
 <template>
     <div class="AddCar">
-        
         <h1>Input Car Information to add car</h1>
         <el-form :model="registerData" :rules="rules" ref="registerData" label-width="100px" class="addCar_page"
             label-position="right">
@@ -24,11 +23,11 @@
             <el-form-item label="Car year" prop="year">
                 <el-input v-model="registerData.year"></el-input>
             </el-form-item>
-            <el-form-item label="Milage" prop="milage">
+            <el-form-item label="milage" prop="milage">
                 <el-input v-model="registerData.milage"></el-input>
             </el-form-item>
 
-            <el-form-item id="myButtons">
+            <el-form-item>
                 <el-button type="primary" @click="submitForm('registerData')">Register</el-button>
                 <el-button @click="resetForm('registerData')">Reset</el-button>
             </el-form-item>
@@ -40,17 +39,7 @@
         </el-form>
     </div>
 </template>
-<style>
-    .AddCar{
-        justify-content: center;
-        margin-left: 20vw;
-        width: 50vw;
-    }
-    #myButtons{
-        margin-left: 27vw;
-        padding: 0;
-    }
-</style>
+
 <script>
 import PostsService from "@/services/apiService";
 

@@ -3,7 +3,7 @@
 
 
 const fabricNetwork = require('fabric-network');
-const SmartContractUtil = require('./js-smart-contract-util.js');
+const SmartContractUtil = require('./js-smart-contract-util.js'); 
 const os = require('os');
 const path = require('path');
 const { fileURLToPath } = require('url')
@@ -14,7 +14,7 @@ exports.connectToNetwork = async function (userName) {
   try {
     const homedir = os.homedir();
     const walletPath = path.join(homedir, '.fabric-vscode', 'v2', 'environments', '1 Org Local Fabric', 'wallets', 'Org1');
-
+    
     const identityName = 'Org1 Admin';
     let connectionProfile = await SmartContractUtil.getConnectionProfile();
     let wallet = await fabricNetwork.Wallets.newFileSystemWallet(walletPath);
@@ -23,15 +23,15 @@ exports.connectToNetwork = async function (userName) {
     const discoveryEnabled = true;
 
     const networkObj = {
-      wallet: wallet,
-      identity: identityName,
-      discovery: {
-        asLocalhost: discoveryAsLocalhost,
-        enabled: discoveryEnabled
-      }
+        wallet: wallet,
+        identity: identityName,
+        discovery: {
+            asLocalhost: discoveryAsLocalhost,
+            enabled: discoveryEnabled
+        }
     };
     await gateway.connect(connectionProfile, networkObj);
-
+    
   } catch (error) {
     console.log(`Error processing transaction. ${error}`);
     console.log(error.stack);

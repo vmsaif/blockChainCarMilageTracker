@@ -2,13 +2,10 @@
   <el-container class="homecontainer">
     <el-header>
       <div class="head">
-        <div class="div1">
-          <img alt="Vue logo" src="./assets/xyz-low-resolution-logo-color-on-transparent-background.png" width="100px" height="40px">
-
-        </div>
+        <h1>Car Web</h1>
         
-        
-        <el-menu class="el-menu-demo" mode="horizontal" text-color="#333" active-text-color="#ffd04b">
+        <el-menu class="el-menu-demo" mode="horizontal"
+          background-color="#4799e6aa" text-color="#333" active-text-color="#ffd04b">
           <el-menu-item index="1"><router-link to="/">Home</router-link></el-menu-item>
           <el-menu-item index="2"><router-link to="/Update">Updata information</router-link></el-menu-item>
           <el-menu-item index="3" ><router-link to="/AddCar">Add car</router-link></el-menu-item>
@@ -35,12 +32,10 @@
 </script>
    
 <style scoped>
-
-
 .homecontainer {
   height: 763px;
   width: 100%;
-  background-color: #E9EEF3;
+
 }
 
 .head {
@@ -49,9 +44,8 @@
 }
 
 .div1 {
-  margin-top: auto;
-  margin-bottom: auto;
-  margin-left: 2vw;
+  /* margin-top: 0px;
+  margin-left: 0px; */
   text-align:center;
 }
 
@@ -63,43 +57,12 @@
 }
 
 .el-header {
-  padding-top: 1px;
-  padding-bottom: 1px;
-  border-radius: 7px;
-  justify-content: center;
-  margin: auto;
-  width: 50vw;
-  background: "#E9EEF3";
-  /* background-color: #4799e6aa; */
+  background-color: #4799e6aa;
   color: #333;
   text-align: center;
   line-height: 10px;
-  overflow: hidden;
 }
-.el-menu-demo{
-  border-radius: 3px;
-  background-color:#4799e6aa;
-  overflow: hidden;
-  margin-left: auto;
-  float: right;
-  
-}
-.el-menu--horizontal>.el-menu-item {
-  border-radius: 3px;
-    float: left;
-    height: 60px;
-    line-height: 60px;
-    margin: 0;
-    border-bottom: 2px solid transparent;
-    color: #909399;
-}
-.el-menu-item:hover {
-  background-color: black;
-  color:white
-}
-li.el-menu-item{
-  border-radius: 10px;
-}
+
 .el-footer {
   background-color: #B3C0D1;
   color: #333;
@@ -129,14 +92,4 @@ li.el-menu-item{
 .el-icon-arrow-down {
   font-size: 12px;
 }
-
-.el-breadcrumb{
-    background-color: rgb(230, 230, 230);
-    height: 20px;
-    width: max-content;
-    padding: 1px 0.5vw;
-    font-size: unset;
-}
-
 </style>
-
