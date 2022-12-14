@@ -1,6 +1,6 @@
 <template>
   <div class="posts">
-    <h1>Query By Vin</h1>
+    <h1>Query By Vim</h1>
     <form v-on:submit="queryByVim">
       <input id="inputBox" type="text" v-model="input.vim" placeholder="Enter Vim to Query">
       <br>
@@ -77,8 +77,8 @@ export default {
             }
             this.tableData.push(data);
           }
-          this.input.data = `Queried Successfull \n
-          Vin: ${apiData.vin}, Make: ${apiData.make}, Model: ${apiData.model}, Year: ${apiData.year} `;
+          this.input.data = `Queried Successfull` + `\n`+ 
+          `Vin: ${apiData.vin}, Make: ${apiData.make}, Model: ${apiData.model}, Year: ${apiData.year} `;
         } else {
           this.input.data = apiData;
         }
