@@ -1,3 +1,11 @@
+/*
+    Name: Hantao Wang, Saif Mahmud
+    Course: COMP 4300
+    Section: A01
+    Version : 0.1.5
+    Description: Creating Blockchain smart Contract for the car milage tracker using hyperledger fabric.
+    
+ */
 'use strict';
 
 const { Contract } = require('fabric-contract-api');
@@ -47,7 +55,6 @@ class MyContract extends Contract {
     async update(ctx, vin, milage, ownerFirstName, ownerLastName) {
 
         let returnMSG = "Vin: " + vin + " has not updated.";
-        // const qArgs = [vin];
 
         try {
             const stringRespond = await ctx.stub.getState(vin);

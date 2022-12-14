@@ -1,7 +1,13 @@
-
+/*
+    Name: Hantao Wang, Saif Mahmud
+    Course: COMP 4300
+    Section: A01
+    Version : 0.1.5
+    Description: A server simulation of gas stations interacticting with the Blockchain for the car milage tracker using hyperledger fabric.
+    
+ */
 
 fs = require('fs');
-
 
 const fabricNetwork = require('fabric-network');
 const SmartContractUtil = require('./js-smart-contract-util.js'); 
@@ -46,7 +52,7 @@ async function main() {
 
         let obj = JSON.parse(fs.readFileSync(fName).toString());
         
-        // generateVin(obj);
+        generateVin(obj);
         await addCarsToChain(connectionProfile, options, obj);
         // sleep(5);
         runServerSimulation(connectionProfile, options, obj);
@@ -61,24 +67,14 @@ async function addCarsToChain(connectionProfile, options, obj) {
         await submitCar(connectionProfile, options, obj[i]);
     }
 }
+
+//generates random vin number to the jason car object
 function generateVin(obj) {
     
     obj.forEach(function(p){
         if(p.vin === '' || p.vin.length < vinDigitLength){
             p.vin = ''+Math.floor(Math.random() * Math.pow(10,vinDigitLength))+'';
         }
-    });
-    fs.writeFileSync(fName, JSON.stringify(obj, null, 2));
-}
-function setCurrDate(obj) {
-    
-    let dateObj = new Date();
-    obj.forEach(function(p){
-        
-        randomVal = Math.floor(Math.random() * randomMax) + randomMin;
-        dateObj.setSeconds(dateObj.getSeconds() + randomVal);
-        p.timeStamp.push(dateObj);
-        
     });
     fs.writeFileSync(fName, JSON.stringify(obj, null, 2));
 }
@@ -113,10 +109,8 @@ async function updateCar(connectionProfile, options, jsonObj) {
     
     let vin = jsonObj.vin;
     let milage = jsonObj.milage;
-    // let timeStamp = jsonObj.timeStamp;
     let ownerFirstName = jsonObj.ownerFirstName;
     let ownerLastName = jsonObj.ownerLastName;
-    // console.log("---"+milage);
     const args = [vin, milage, ownerFirstName, ownerLastName];
 
     let gateway = new fabricNetwork.Gateway();
@@ -124,8 +118,6 @@ async function updateCar(connectionProfile, options, jsonObj) {
     const response = await SmartContractUtil.submitTransaction('MyContract', 'update', args, gateway); 
     gateway.disconnect();
     
-
-    // const returnMSG = JSON.parse(response.toString());
     console.log(response.toString());
     return response;
     
@@ -146,11 +138,6 @@ async function submitCar(connectionProfile, options, jsonObj) {
     await gateway.connect(connectionProfile, options);
     const response = await SmartContractUtil.submitTransaction('MyContract', 'add', args, gateway); 
     gateway.disconnect();
-    // Returns buffer of transaction return value
-    // console.log(response.toString());
-   
-    // console.log(JSON.parse(response.toString()));
-    
 }
 
 function sleep(seconds) {
@@ -162,7 +149,7 @@ function sleep(seconds) {
 }
 
 main().then(() => {
-    console.log('done');
+    
   }).catch((e) => {
     console.log('Final error checking.......');
     console.log(e);

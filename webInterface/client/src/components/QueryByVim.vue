@@ -1,6 +1,6 @@
 <template>
   <div class="posts">
-    <h1>Query By Vim</h1>
+    <h1>Query By Vin</h1>
     <form v-on:submit="queryByVim">
       <input id="inputBox" type="text" v-model="input.vim" placeholder="Enter Vim to Query">
       <br>
