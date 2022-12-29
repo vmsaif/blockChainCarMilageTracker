@@ -1,4 +1,5 @@
-# COMP 4300 Computer Networks Project
+
+# Blockchain Car Mileage Tracker
 
 ## Objective
 
