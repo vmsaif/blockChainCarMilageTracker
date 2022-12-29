@@ -1,1 +1,0 @@
-run `npm run serve` from this directory to start the client app.
