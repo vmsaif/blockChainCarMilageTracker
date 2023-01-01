@@ -23,7 +23,6 @@ The main components of this project are Vue.js, IBM Blockchain Platform VS Code 
 
 
 ## Installation and Running the Code
-<br>
 
 ### Vue.js
     run `npm install vue`
