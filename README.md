@@ -1,6 +1,8 @@
 
 # Blockchain Car Mileage Tracker
 
+[![Hits](https://hits.sh/github.com/vmsaif/blockChainCarMilageTracker.svg?label=Visits&color=100b75)](https://hits.sh/github.com/vmsaif/blockChainCarMilageTracker/)
+
 ## Objective
 
 Our goal is to eliminate the problem of odometer rollback in the used car market and insurance industry using blockchain technology. Research indicates that nearly 200,000 cars have their odometers rolled back each year, and there are currently about 1.8 million vehicles on the road with rolled-back odometers. By using blockchain technology, we aim to increase buyer trust, promote the development of the market, and drive innovation in the second-hand car industry.
